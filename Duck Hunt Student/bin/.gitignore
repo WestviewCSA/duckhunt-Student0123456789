@@ -1,15 +1,14 @@
-/Coral.class
-/Foreground.class
-/Frame.class
-/GameBackground.class
-/Jellyfish.class
-/Music.class
-/StdAudio$1.class
-/StdAudio$BackgroundRunnable.class
-/StdAudio$QueueOfDoubles.class
-/StdAudio.class
-/Stone.class
-/Turtle.class
-/TurtleEatingJellyfish.class
-/Jellyfish Sound.m4a
-/Turtle Eating Jellyfish Sound.m4a
+/TurtleEatingJellyfishSound.class
+/JellyfishSound.class
+/Jellyfish Sound.wav
+/TurtleEatingJellyfish Sound.wav
+/JellyfishSound.wav
+/JellyfishSound.m4a
+/TurtleEatingJellyfish Sound.m4a
+/imgs/
+/Jellyfish-Sound.wav
+/JellyfishPracticeSound$1.class
+/JellyfishPracticeSound$BackgroundRunnable.class
+/JellyfishPracticeSound$QueueOfDoubles.class
+/JellyfishPracticeSound.class
+/soundEffect/

@@ -17,43 +17,68 @@ import javax.swing.Timer;
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	Font bigFont = new Font("Serif", Font.BOLD, 100);//finish this later
 	Font mediumFont = new Font ("Serif", Font.BOLD, 50);
+	Font smallFont = new Font ("Serif", Font.BOLD, 25);
 //turtle needs to go across screen
-//once it intersects with the coral I want it to hide
+//time will start once turtle hides behind coral
 //When the mouse intersects with the jellyfish i want the turtle eating jellyfish to come up and go down
 //The first round will have one jellyfish
 //The second round will have two jellyfish
 //The third round will have three jellyfish
 //The game will end after three jellyfish
-	Jellyfish jellyfish = new Jellyfish();
+//actually just do as many jellyfish as you can
+//if someone doesn't click any jellyfish by the time the round ends end the game
+	 
+	Jellyfish jellyfish1 = new Jellyfish();
+	Jellyfish jellyfish2 = new Jellyfish();//Call this
+	Jellyfish jellyfish3 = new Jellyfish(); //this
+	Jellyfish jellyfish4 = new Jellyfish(); //and this Jellyfish
+	
 	Background ground = new Background("Background.png");
 	Foreground foreground = new Foreground("Foreground.png");
 	Stone stone = new Stone("Stone.png");
 	Coral coral = new Coral();
 	Turtle turtle = new Turtle();
 	TurtleEatingJellyfish turtleEatingJellyfish = new TurtleEatingJellyfish();
-	
+//	JellyfishSound jellyfishSound = new JellyfishSound("Jellyfish-Sound.wav");
+//	TurtleEatingJellyfishSound turtleEatingJellyfishSound = new TurtleEatingJellyfishSound("Turtle-Eating-Jellyfish-Sound.wav");
 	//Score related variables and timer
-	int roundTimer = 30;
+	int roundTimer = 35;
 	int score = 0;
 	long time = 0;
 	int currRound = 1;
 	public void init() {
+		
 		turtle.setWidthHeight(200, 200); //not needed if its not colliding
 		turtle.setScale(4, 4);
-		turtle.setXY(0, 820); //initially off the screen at the bottom
+		turtle.setXY(0, 450); //initially off the screen at the bottom
 		turtle.setVx(3);
 		
 		turtleEatingJellyfish.setScale(4, 4);
 		turtleEatingJellyfish.setWidthHeight(30, 30);
 		turtleEatingJellyfish.setXY(550,430);
 		turtleEatingJellyfish.setVx(0);
+		turtleEatingJellyfish.setVy(0);
 		
-		jellyfish.setXY(50, 30);
-		jellyfish.setScale(3, 3);
-		jellyfish.setWidthHeight(95, 125);
+		jellyfish1.setXY(50, 410);
+		jellyfish1.setScale(3, 3);
+		jellyfish1.setWidthHeight(95, 125);
+		jellyfish1.setVx(3);
+		jellyfish1.setVy(3);
 		
-		jellyfish.setVy(3);
-		jellyfish.setVx(2);
+		jellyfish2.setScale(3, 3);
+		jellyfish2.setWidthHeight(95, 125);
+		jellyfish2.setVx(3);
+		jellyfish2.setXY(50, 500);
+
+		jellyfish3.setXY(600, 500);
+		jellyfish3.setScale(3, 3);
+		jellyfish3.setWidthHeight(95, 125);
+		jellyfish3.setVx(3);
+
+		jellyfish4.setXY(400, 300);
+		jellyfish4.setScale(3, 3);
+		jellyfish4.setWidthHeight(95, 125);
+		jellyfish4.setVx(3);
 		
 		ground.setScale(8.95,6); //scale the size of my background
 		ground.setXY(0,0); //moves the background
@@ -62,7 +87,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		foreground.setXY(0, 0);
 		
 		coral.setWidthHeight(100,300);
-		coral.setScale(.43, .43);
+		coral.setScale(.43, .53);
 		coral.setXY(500,410);
 		
 		stone.setScale(5,5);
@@ -74,21 +99,55 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	}
 	//*initialize objects and vars for the next round
 	public void nextRound() {
-		if(jellyfish.getVx()==0 && jellyfish.getVy()==0 && turtle.getY()>800) {
-		score++;
-		roundTimer = 30;
-		currRound++;}
-		
+		int randX1 = ((int)(Math.random()*(801) + 1));
+		int randY1= ((int)(Math.random()*(501) + 1));
+		int randX2 = ((int)(Math.random()*(801) + 1));
+		int randY2= ((int)(Math.random()*(501) + 1));
+		int randX3 = ((int)(Math.random()*(801) + 1));
+		int randY3= ((int)(Math.random()*(501) + 1));
+		int randX4 = ((int)(Math.random()*(801) + 1));
+		int randY4= ((int)(Math.random()*(501) + 1));
+//		jellyfish1.setVx(randVx+currRound);
+//		jellyfish1.setVy(randVy+currRound);
+		//jellyfish1.setVy(3);
+		if (currRound >=1) {
+			jellyfish1.setX(randX1);
+			jellyfish1.setY(randY1);
+		}
+		if (currRound >=2) {
+			jellyfish2.setX(randX2);
+			jellyfish2.setY(randY2);
+//			jellyfish2.setVx(randVx+currRound);
+//			jellyfish2.setVy(randVy+currRound);
+//			jellyfish2.setVx(2);
+			jellyfish2.setVx(3);
+			jellyfish2.setVy(3);
+		}
+		if (currRound>=3) {
+			jellyfish3.setX(randX3);
+			jellyfish3.setY(randY3);
+//			jellyfish3.setVx(2);
+			jellyfish3.setVy(4);
+			jellyfish3.setVx(4);
+//			jellyfish3.setVx(randVx+currRound);
+//			jellyfish3.setVy(randVy+currRound);
+		} 
+		if (currRound == 4) {
+			jellyfish2.setX(randX4);
+			jellyfish2.setY(randY4);
+//			jellyfish4.setVx(2);
+			jellyfish4.setVx(5);
+			jellyfish4.setVy(5);
+//			jellyfish4.setVx(randVx+currRound);
+//			jellyfish4.setVy(randVy+currRound);
+		}
+		t.start();
 		//reset the roundCOunter
 		//re-calibrate your objects	
 		//maybe additional objects that start off off the screen in -1000 y
 		//the characters could have 0 Vx and Vy and then turn it on after the round ends
 		//speed of the objects get faster over time each round
-		int randVx = ((int)(Math.random()*(5) + 1));
-		int randVy= ((int)(Math.random()*(5) + 1));
-		jellyfish.setVx(randVx+currRound);
-		jellyfish.setVy(randVy+currRound);
-		turtle.setXY(0, 900);
+		
 	}
 		
 		
@@ -97,17 +156,16 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		//add 16 to time since paint is called every 20ms
 		time += 20; //time elapse update
-		if(time%1000 == 0) { //has it been 1 second
-			if(roundTimer==0) {
-				//What do I want to do after one round
-				nextRound();
-				t.stop();
-										}
+		if(time%1000 == 0) {
+			if (roundTimer > 0){
+				roundTimer--;//has it been 1 second
+							}
 		}
 		//Text for moving to the next round
-		if (roundTimer==30) {
-			g.drawString("press the space bar for the next round", 0, 0);
-			turtleEatingJellyfish.setXY(0, 900);
+//		if ((currRound==1 && score ==0)||(currRound==2 && score==1) ||(currRound==3 && score ==2 )){
+		//}
+		if (roundTimer<=35) {
+			turtleEatingJellyfish.setXY(550, 430);
 		}
 		g.setFont(bigFont);
 		
@@ -118,45 +176,126 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		foreground.paint(g);
 		
-		jellyfish.paint(g);
 		turtle.paint(g);
 		
 		turtleEatingJellyfish.paint(g);
 		
 		
-		coral.paint(g);
-			
-		if((turtleEatingJellyfish.getY()<400)||(turtleEatingJellyfish.getY() > 800)) {
-			turtleEatingJellyfish.setVy(turtleEatingJellyfish.getVy() * -1);
+		jellyfish1.paint(g);
+		if (currRound >=2) {
+			jellyfish2.paint(g);
 		}
-		if((jellyfish.getX()<0)|| (jellyfish.getX() > 800)) {
-			jellyfish.setVx(jellyfish.getVx()*-1);
+		if (currRound >=3) {
+			jellyfish3.paint(g);
+		}
+		if (currRound >=4) {
+		jellyfish4.paint(g);
+		}
+			
+		if((jellyfish1.getX()<0) || (jellyfish1.getX() > 800)) {
+			jellyfish1.setVx(jellyfish1.getVx()*-1);
 			
 		}
-		if((jellyfish.getY()<0)||(jellyfish.getY() > 500)) {
+		if((jellyfish1.getY()<0)||(jellyfish1.getY() > 500)) {
 			//turtle.setVx(turtle.);
-			jellyfish.setVy(jellyfish.getVy()*-1);
+			jellyfish1.setVy(jellyfish1.getVy()*-1);
 		}
 		
 		//if the jellyfish is free-falling! and hits the ground
-		if(((jellyfish.getVx() ==0) && (jellyfish.getVy()>0) && (jellyfish.getY() > 500))) {
-			turtle.setVy(-3);
-			jellyfish.setVy(0); //jellyfish needs to stop moving
+		if(((jellyfish1.getVx() == 0) && (jellyfish1.getVy()>0))) {
+			jellyfish1.setVy(0); //jellyfish needs to stop moving
 		}
-		if(turtle.getX()>=coral.getX()) {
-			turtle.setXY(0, 820);}
+		if((jellyfish2.getX()<0) || (jellyfish2.getX() > 800)) {
+			jellyfish2.setVx(jellyfish2.getVx()*-1);
+			
+		}
+		if((jellyfish2.getY()<0)||(jellyfish2.getY() > 500)) {
+			//turtle.setVx(turtle.);
+			jellyfish2.setVy(jellyfish2.getVy()*-1);
+		}
 		
+		//if the jellyfish is free-falling! and hits the ground
+		if(((jellyfish2.getVx()==0) && (jellyfish2.getVy()>0))) {
+			jellyfish2.setVy(0); }//jellyfish needs to stop moving
+			
+		if((jellyfish3.getX()<0)|| (jellyfish3.getX() > 800)) {
+				jellyfish3.setVx(jellyfish3.getVx()*-1);
+				
+			}
+		if((jellyfish3.getY()<0)||(jellyfish3.getY() > 500)) {
+				//turtle.setVx(turtle.);
+				jellyfish3.setVy(jellyfish3.getVy()*-1);
+			}
+			//if the jellyfish is free-falling! and hits the ground
+		if(((jellyfish3.getVx() ==0) && (jellyfish3.getVy()>0))) {
+				jellyfish3.setVy(0);}
+		
+		
+		if((jellyfish4.getX()<0)|| (jellyfish4.getX() > 800)) {
+			jellyfish4.setVx(jellyfish4.getVx()*-1);
+			
+		}
+		if((jellyfish4.getY()<0)||(jellyfish4.getY() > 500)) {
+			//turtle.setVx(turtle.);
+			jellyfish4.setVy(jellyfish4.getVy()*-1);
+		}
+		
+		//if the jellyfish is free-falling! and hits the ground
+		if(((jellyfish4.getVx() ==0) && (jellyfish4.getVy()>0))) {
+			jellyfish4.setVy(0); }//jellyfish needs to stop moving
+		//jellyfish needs to stop moving
+		
+		if(turtle.getX()>=coral.getX()) {
+			turtle.setXY(0, 900);
+//			jellyfish1.setVx(3);
+//			jellyfish1.setVy(2);
+			t.start();
+			}
+		
+
+		coral.paint(g);
+
 		g.setColor(Color.magenta);
-		g.drawString(""+this.roundTimer, 750, 100); //draw this last
+		if (roundTimer<=30) {
+		g.drawString(""+this.roundTimer, 750, 100);} //draw this last
 		g.setFont(mediumFont);
 		g.drawString("Round "+this.currRound , 50, 650);
 		g.drawString("Score: "+this.score, 600, 650);
 		
-		//collision between the sides of the image
-		if (score==currRound) {
-			nextRound();
-		}
+		g.setFont(smallFont);
+		g.drawString("Press the space bar for the next round", 10, 30);
+		g.drawString("Game starts when timer appears", 10, 60);
 		
+		g.setFont(mediumFont);
+
+		if(roundTimer==0 && (jellyfish1.getVx()>0 || jellyfish2.getVx()>0 || jellyfish3.getVx()>0 || jellyfish4.getVx()>0)) {
+			jellyfish1.setVx(0);
+			jellyfish2.setVx(0);
+			jellyfish3.setVx(0);
+			jellyfish4.setVx(0);
+			jellyfish1.setVy(0);
+			jellyfish2.setVy(0);
+			jellyfish3.setVy(0);
+			jellyfish4.setVy(0);
+		}
+		if (jellyfish1.getVx()==0 && jellyfish2.getVx()==0 && jellyfish3.getVx()==0 && jellyfish4.getVx()==0 && currRound<5) {
+			g.drawString("YOU LOST! Be Better! :)", 300, 200);
+		}
+		else if (currRound>=5) {
+			g.drawString("Congratulations you have beat the game!", 2, 200);
+			t.stop();
+			jellyfish1.setVx(0);
+			jellyfish2.setVx(0);
+			jellyfish3.setVx(0);
+			jellyfish4.setVx(0);
+			jellyfish1.setVy(0);
+			jellyfish2.setVy(0);
+			jellyfish3.setVy(0);
+			jellyfish4.setVy(0);
+		}
+		//collision between the sides of the image
+		
+
 		//logic for reseting the doc
 		
 	}
@@ -206,28 +345,198 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		Rectangle rMouse= new Rectangle(mouse.getX(), mouse.getY(), 25, 25);
 		//guess and check size for now
 		//2nd rectangle will be for your Object
-		Rectangle rMain = new Rectangle(
-										jellyfish.getX(), jellyfish.getY(),
-										jellyfish.getWidth(), jellyfish.getHeight()
-										);
-		Rectangle rMTurtle = new Rectangle(turtle.getX(),turtle.getY(),turtle.getWidth(),turtle.getHeight());
+		//make a rectangle for each jellyfish and for round 1 make it so that jellyfish 1 has to be clicked and so on for the others
+		Rectangle rJellyfish1 = new Rectangle(
+										jellyfish1.getX(), jellyfish1.getY(),
+										jellyfish1.getWidth(), jellyfish1.getHeight());
+		Rectangle rJellyfish2 = new Rectangle(
+				jellyfish2.getX(), jellyfish2.getY(),
+				jellyfish2.getWidth(), jellyfish2.getHeight());
+		Rectangle rJellyfish3 = new Rectangle(
+				jellyfish3.getX(), jellyfish3.getY(),
+				jellyfish3.getWidth(), jellyfish3.getHeight());
+		Rectangle rJellyfish4 = new Rectangle(
+				jellyfish4.getX(), jellyfish4.getY(),
+				jellyfish4.getWidth(), jellyfish4.getHeight());
 		
-		Rectangle rTurtleEatingJellyfish = new Rectangle (turtleEatingJellyfish.getX(), turtleEatingJellyfish.getY(), turtleEatingJellyfish.getWidth(), turtleEatingJellyfish.getHeight());
-		
-		Rectangle rCoral = new Rectangle (coral.getX(), coral.getY(), coral.getWidth(), coral.getHeight());
 		//check if they're colliding
-		if((rMouse.intersects(rMain))) { //do the 2 rect intersect?
+		//if(rMouse.intersects(rJellyfish1)) { //do the 2 rect intersect?
 			//There was a successful click
 			//dog needs to move in the same x position as the duck
 			//make sure dog is currently off the screen
 			//make the dog y velocity negative (so it goes up)
 			//turtle.setX(jellyfish1.getX()
-			roundTimer=0;
-			jellyfish.setVx(0);
-			jellyfish.setVy(0);
-			turtleEatingJellyfish.setVy(3);
+//			t.stop();
+//			roundTimer=0;
+//			turtleEatingJellyfish.setVy(3);
+//			jellyfish1.setVx(0);
+//			jellyfish1.setVy(0);
+//			t.stop();
+//			roundTimer = 0;}
+	if (roundTimer<=30) {
+		if(rMouse.intersects(rJellyfish1)) { //do the 2 rect intersect?
+			System.out.println("I just clicked Jellyfish 1");
+			turtleEatingJellyfish.setXY(550,430);
+			turtleEatingJellyfish.setVy(-10);
+			//There was a successful click
+			//dog needs to move in the same x position as the duck
+			//make sure dog is currently off the screen
+			//make the dog y velocity negative (so it goes up)
+			//turtle.setX(jellyfish1.getX()
+			jellyfish1.setVx(0);
+			jellyfish1.setVy(0);
+			System.out.println("Playing jellyfish sound");
+			StdAudio.playInBackground("soundEffect/Jellyfish-Sound.wav");
+//			jellyfishSound.play();
+	       // turtleEatingJellyfish.setVy(-3); // Set initial upward velocity
+
+			if (currRound==1) {
+				t.stop();
+				System.out.println("I am inside the if statement if currRound==1");
+				roundTimer=0;
+//				turtle.setXY(0, 820);//finish this
+//				turtle.setVx(3);
+//				turtleEatingJellyfish.setVx(-3);
+				score=1;
+				currRound=2;
+
 			}
+				else if (currRound==2 && jellyfish2.getVx()==0 && jellyfish2.getVy()==0) {
+				System.out.println("I just clicked Jellyfish 1 I am in the if-statement if jellyfish 2 and currRound = smth");
+
+				t.stop();
+				roundTimer=0;
+//				turtleEatingJellyfish.setVy(-3);
+				score=2;
+				currRound=3;
+
+				
+				
+			}
+				else if (currRound==3 && jellyfish2.getVx()==0 && jellyfish2.getVy()==0 && jellyfish3.getVx()==0 && jellyfish3.getVy()==0) {
+				t.stop();
+				roundTimer=0;
+//				turtleEatingJellyfish.setVy(-3);
+				score=3;
+				currRound=4;
+
+			}
+				else if (currRound==4 && jellyfish2.getVx()==0 && jellyfish2.getVy()==0 && jellyfish3.getVx()==0 && jellyfish3.getVy()==0 && jellyfish4.getVx()==0 && jellyfish4.getVy()==0) {
+				t.stop();
+				roundTimer=0;
+//				turtleEatingJellyfish.setVy(-3);
+				score=4;
+				currRound=5;
+
+				}
+
+			}
+	
+		if(rMouse.intersects(rJellyfish2)) { //do the 2 rect intersect?
+
+			//There was a successful click
+			//dog needs to move in the same x position as the duck
+			//make sure dog is currently off the screen
+			//make the dog y velocity negative (so it goes up)
+			//turtle.setX(jellyfish1.getX()
+			jellyfish2.setVx(0);
+			jellyfish2.setVy(0);
+			StdAudio.playInBackground("soundEffect/Jellyfish-Sound.wav");
+//			jellyfishSound.play();
+	     //   turtleEatingJellyfish.setVy(-3); // Set initial upward velocity
+
+			if (currRound==2 && jellyfish1.getVx()==0 && jellyfish1.getVy()==0) {
+
+				t.stop();
+				roundTimer=0;
+//				turtleEatingJellyfish.setVy(-3);
+				score=2;
+				currRound=3;
+
+			}
+			else if (currRound==3 && jellyfish1.getVx()==0 && jellyfish1.getVy()==0 && jellyfish3.getVx()==0 && jellyfish3.getVy()==0) {
+				t.stop();
+				roundTimer=0;
+//				turtleEatingJellyfish.setVy(-3);
+				score=3;
+				currRound=4;
+
+			}
+			else if (currRound==4 && jellyfish1.getVx()==0 && jellyfish1.getVy()==0 && jellyfish3.getVx()==0 && jellyfish3.getVy()==0 && jellyfish4.getVx()==0 && jellyfish4.getVy()==0) {
+				t.stop();
+				roundTimer=0;
+//				turtleEatingJellyfish.setVy(-3);
+				score=4;
+				currRound=5;
+
+				}
+			
+			
+		}
+		if(rMouse.intersects(rJellyfish3)) { //do the 2 rect intersect?
+
+			//There was a successful click
+			//dog needs to move in the same x position as the duck
+			//make sure dog is currently off the screen
+			//make the dog y velocity negative (so it goes up)
+			//turtle.setX(jellyfish1.getX()
+			jellyfish3.setVx(0);
+			jellyfish3.setVy(0);
+			StdAudio.playInBackground("soundEffect/Jellyfish-Sound.wav");
+//			jellyfishSound.play();
+	        //turtleEatingJellyfish.setVy(-3); // Set initial upward velocity
+
+			if (currRound==3 && jellyfish1.getVx()==0 && jellyfish1.getVy()==0 && jellyfish2.getVx()==0 && jellyfish2.getVy()==0) {
+				t.stop();
+				roundTimer=0;
+//				turtleEatingJellyfish.setVy(-3);
+				score=3;
+				currRound=4;
+
+			}
+			else if (currRound==4 && jellyfish1.getVx()==0 && jellyfish1.getVy()==0 && jellyfish2.getVx()==0 && jellyfish2.getVy()==0 && jellyfish4.getVx()==0 && jellyfish4.getVy()==0) {
+				t.stop();
+				roundTimer=0;
+//				turtleEatingJellyfish.setVy(-3);
+				score=4;
+				currRound=5;}
+
+			
+		}
+		
+		if(rMouse.intersects(rJellyfish4)) { //do the 2 rect intersect?
+			//There was a successful click
+			//dog needs to move in the same x position as the duck
+			//make sure dog is currently off the screen
+			//make the dog y velocity negative (so it goes up)
+			//turtle.setX(jellyfish1.getX()
+			jellyfish4.setVx(0);
+			jellyfish4.setVy(0);
+//			jellyfishSound.play();
+			StdAudio.playInBackground("soundEffect/Jellyfish-Sound.wav");
+
+	        //turtleEatingJellyfish.setVy(-3); // Set initial upward velocity
+	        
+			if (currRound==4 && jellyfish1.getVx()==0 && jellyfish1.getVy()==0 && jellyfish3.getVx()==0 && jellyfish3.getVy()==0 && jellyfish2.getVx()==0 && jellyfish2.getVy()==0) {
+				t.stop();
+				roundTimer=0;
+				//turtleEatingJellyfish.setVy(-3);
+				score=4;
+				currRound=5;
+
+			
+			}
+			
+
+		}
 	}
+	
+
+			//maybe take out the eating jellyfish part and just make the og turtle move 
+	
+			
+}
+	
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
@@ -248,9 +557,14 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		if (arg0.getKeyCode()==32) {
 			//start the timer again
 			if(!t.isRunning()) {
-				turtle.setXY(0, 400);
-				turtle.setVx(2);
-				t.start();
+				System.out.println("Sound Effect Turtle");
+				StdAudio.playInBackground("soundEffect/Turtle-Eating-Jellyfish-Sound.wav");
+				turtleEatingJellyfish.setVy(5);
+//				turtleEatingJellyfishSound.play();
+				jellyfish1.setVx(3);
+				jellyfish1.setVy(2);
+				nextRound();
+				roundTimer=30;
 			}
 		}
 	}

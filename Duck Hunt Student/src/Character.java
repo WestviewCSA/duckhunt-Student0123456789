@@ -118,7 +118,7 @@ public class Character {
 		init(x,y);
 		g2.drawImage(img, tx, null);
 		
-		
+		showHitBox=false;
 		if(showHitBox) 
 		{
 			g.setColor(Color.green);
